@@ -1,7 +1,7 @@
 # Compiler: GCC
-CC := gcc
+CC := clang
 # Common GCC flags
-CCFLAGS := -O1 -fno-stack-protector -lcrypt
+CCFLAGS := -O1 -fno-stack-protector 
 # Compiler flags for x86_64
 CCFLAGS64 := $(CCFLAGS) -m64
 
@@ -20,6 +20,12 @@ SRCS = $(wildcard *.c)
 PROGS = $(patsubst %.c,%.64,$(SRCS))
 # All lets you make everything
 all: $(PROGS)
+
+docker:
+	docker build -t crackmes .
+
+docker-run:
+	docker run --rm -i -t -v $(shell pwd):/work/crackmes crackmes
 
 # Delete everything
 .PHONY: clean
